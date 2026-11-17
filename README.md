@@ -1,26 +1,82 @@
-# Optimized Smart Money Concept (SMC) Gold Backtester
+# 📈 SMC Backtester
 
-This repository contains a specialized Python-based backtesting engine designed for **Gold (XAU/USD)**. It implements an automated strategy based on **Smart Money Concepts (SMC)**, specifically focusing on session-based liquidity sweeps, Fair Value Gaps (FVG), and trend-alignment with the 20-period Exponential Moving Average (EMA).
+<div align="center">
 
-## 🚀 Strategy Overview
-The strategy identifies potential trade setups during major market sessions (London & New York). It uses a rule-based logic to determine high-probability entries:
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Backtesting](https://img.shields.io/badge/Backtesting-9ECE6A?style=for-the-badge)](https://github.com/Mounib-Chandoul/SMC_Trader_Bot)
+[![License: MIT](https://img.shields.io/badge/License-MIT-9ECE6A?style=for-the-badge)](LICENSE)
 
-* **Trend Filter:** 20-period EMA to ensure trades are aligned with the short-term trend.
-* **Liquidity Logic:** Checks for price interaction with recent 24-hour highs/lows.
-* **Imbalance Filter:** Detects Fair Value Gaps (FVG) as confirmation for entry.
-* **Trade Management:**
-    * **TP1 (30% partial):** Locked in at 10 points.
-    * **Break Even (BE):** Automatically shifts stop-loss to entry price after TP1 is hit.
-    * **TP2 (70% partial):** Target profit exit at 30 points.
-    * **Risk:** Fixed at 10 points for initial stop-loss.
+</div>
 
-## 🛠️ Technical Stack
-* **Language:** Python 3.x
-* **Data Source:** `yfinance` (Yahoo Finance API)
-* **Data Analysis:** `pandas`, `numpy`
+A rule-based backtesting engine for **Smart Money Concepts (SMC)** strategies
+on Gold (XAU/USD) and EUR/USD. It focuses on session liquidity sweeps, Fair
+Value Gaps (FVG) and EMA trend alignment — with explicit partial-exit and
+break-even rules.
 
-## 📂 Project Structure
+---
+
+## Strategy
+
+| Component | Rule |
+|---|---|
+| Session | London and New York windows only |
+| Trend filter | Price aligned with the 20-period EMA |
+| Liquidity | Interaction with recent 24h highs/lows (sweep) |
+| Confirmation | Fair Value Gap (imbalance) present |
+| Initial risk | Fixed 10-point stop-loss |
+| TP1 | 30% partial at +10 points |
+| Break-even | Stop moves to entry after TP1 |
+| TP2 | Remaining 70% exited at +30 points |
+
+Two tuned variants are included:
+
+- `backtest_gold_optimized.py` — XAU/USD
+- `backtest_eurusd_optimized.py` — EUR/USD
+
+---
+
+## Stack
+
+- Python 3.x
+- `yfinance` for historical data
+- `pandas` / `numpy` for indicators and the event loop
+
+---
+
+## Run
+
+```bash
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python backtest_gold_optimized.py
+python backtest_eurusd_optimized.py
+```
+
+Each script downloads its instrument, applies the rules bar by bar and prints
+performance statistics (trades, win rate, PnL, drawdown).
+
+---
+
+## Layout
+
 ```text
-/smc-gold-backtester
-├── main.py           # Core logic, signal generation, and backtesting engine
-└── README.md         # Documentation
+SMC_Trader_Bot/
+├── backtest_gold_optimized.py    # XAU/USD strategy + engine
+├── backtest_eurusd_optimized.py  # EUR/USD variant
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## ⚠️ Disclaimer
+
+Educational research only. Past performance in a backtest does not predict
+future results, and nothing here constitutes financial advice. No live order
+placement is implemented.
+
+## License
+
+[MIT](LICENSE).
